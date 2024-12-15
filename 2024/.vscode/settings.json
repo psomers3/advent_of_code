@@ -70,7 +70,7 @@
     },
     "cmake.debugConfig": {
         "args": [
-            "../input_files/day4.txt"
+            "../input_files/day5.txt"
         ]
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang++",

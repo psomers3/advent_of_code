@@ -1,9 +1,6 @@
 #include "file_loading.h"
 #include <string>
 #include <vector>
-#include <regex>
-#include <map>
-#include <set>
 
 int main(int argc, char *argv[])
 {
