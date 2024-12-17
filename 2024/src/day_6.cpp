@@ -59,7 +59,6 @@ int main(int argc, char *argv[])
         next_space = spaces.at(curr_pos_i + std::get<0>(curr_direction)).at(curr_pos_j + std::get<1>(curr_direction));
     }
 
-
     std::set<std::tuple<int,int>> obstical_positions = {};
     // sadly just brute force putting the obstacle along the original path and resimulate
     for (auto pos : path){
