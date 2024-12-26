@@ -5,20 +5,20 @@
 #include <map>
 #include <set>
 
-long get_num_stones(std::string val, int multiplication_level, std::map<std::tuple<std::string, int>, long> &seen, int max_mulitplication)
+long get_num_stones(std::string val, int multiplication_level, std::map<std::tuple<std::string, int>, long> &seen, int max_multiplication)
 {
-    std::tuple<std::string, int> cache_key = {val, max_mulitplication - multiplication_level};
+    std::tuple<std::string, int> cache_key = {val, max_multiplication - multiplication_level};
     if (seen.contains(cache_key))
         return seen[cache_key];
     long num_stones = 0;
-    if (multiplication_level == max_mulitplication)
+    if (multiplication_level == max_multiplication)
     {
         return 1;
     }
 
     if (val == "0")
     {
-        num_stones += get_num_stones("1", multiplication_level + 1, seen, max_mulitplication);
+        num_stones += get_num_stones("1", multiplication_level + 1, seen, max_multiplication);
     }
 
     else if (val.length() % 2 == 0)
@@ -29,7 +29,7 @@ long get_num_stones(std::string val, int multiplication_level, std::map<std::tup
         {
             split_stone += val.at(j);
         }
-        num_stones += get_num_stones(split_stone, multiplication_level + 1, seen, max_mulitplication);
+        num_stones += get_num_stones(split_stone, multiplication_level + 1, seen, max_multiplication);
         split_stone = "";
         for (int j = val.length() / 2; j < val.length(); j++)
         {
@@ -39,11 +39,11 @@ long get_num_stones(std::string val, int multiplication_level, std::map<std::tup
         }
         if (split_stone == "")
             split_stone = "0";
-        num_stones += get_num_stones(split_stone, multiplication_level + 1, seen, max_mulitplication);
+        num_stones += get_num_stones(split_stone, multiplication_level + 1, seen, max_multiplication);
     }
     else
     {
-        num_stones += get_num_stones(std::to_string(std::stol(val) * 2024), multiplication_level + 1, seen, max_mulitplication);
+        num_stones += get_num_stones(std::to_string(std::stol(val) * 2024), multiplication_level + 1, seen, max_multiplication);
     }
 
     seen[cache_key] = num_stones;
