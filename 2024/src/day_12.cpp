@@ -66,18 +66,14 @@ int number_of_sides(std::set<PerimeterPiece> perimeter_pieces)
                         continue;
                     if (std::abs(std::get<0>(p) - std::get<0>(existing_perim_piece)) == 1 && std::get<1>(p) - std::get<1>(existing_perim_piece) != 0)
                         continue;
-
                     if (std::get<2>(existing_perim_piece) != std::get<2>(p))
-                    {
                         continue;
-                    }
                     if (std::abs(std::get<0>(p) - std::get<0>(existing_perim_piece)) == 1 &&
                         std::get<1>(p) != std::get<1>(existing_perim_piece))
                         continue;
                     if (std::abs(std::get<1>(p) - std::get<1>(existing_perim_piece)) == 1 &&
                         std::get<0>(p) != std::get<0>(existing_perim_piece))
                         continue;
-
                     side.push_back(p);
                 }
             }
