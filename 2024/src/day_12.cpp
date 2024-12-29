@@ -8,7 +8,7 @@
 typedef std::tuple<int, int> position;
 typedef std::tuple<int, int, int> PerimeterPiece;
 
-std::tuple<int, int> get_area_and_perim(
+int get_area_and_perim(
     char c,
     int i,
     int j,
@@ -19,24 +19,22 @@ std::tuple<int, int> get_area_and_perim(
 {
     if (visited.contains({i, j}))
     {
-        return {0, 0};
+        return 0;
     }
     if (i < 0 || j < 0 || i >= garden.size() || j >= garden.at(0).size() || garden.at(i).at(j) != c)
     {
         perimeter_pieces.insert({i, j, side});
-        return {0, 1};
+        return 0;
     }
     garden.at(i).at(j) = '.';
     visited.insert({i, j});
     int area = 0;
     int perim = 0;
-    auto upper = get_area_and_perim(c, i - 1, j, 2, garden, visited, perimeter_pieces);
-    auto lower = get_area_and_perim(c, i + 1, j, 0, garden, visited, perimeter_pieces);
-    auto left = get_area_and_perim(c, i, j - 1, 3, garden, visited, perimeter_pieces);
-    auto right = get_area_and_perim(c, i, j + 1, 1, garden, visited, perimeter_pieces);
-    area += std::get<0>(upper) + std::get<0>(lower) + std::get<0>(right) + std::get<0>(left);
-    perim += std::get<1>(upper) + std::get<1>(lower) + std::get<1>(right) + std::get<1>(left);
-    return {area + 1, perim};
+    area += get_area_and_perim(c, i - 1, j, 2, garden, visited, perimeter_pieces);
+    area += get_area_and_perim(c, i + 1, j, 0, garden, visited, perimeter_pieces);
+    area += get_area_and_perim(c, i, j - 1, 3, garden, visited, perimeter_pieces);
+    area += get_area_and_perim(c, i, j + 1, 1, garden, visited, perimeter_pieces);
+    return area + 1;
 }
 
 int number_of_sides(std::set<PerimeterPiece> perimeter_pieces)
@@ -96,7 +94,7 @@ int main(int argc, char *argv[])
     std::vector<std::vector<char>> garden;
     long total_part_1 = 0;
     long total_part_2 = 0;
-
+    long area = 0;
     std::string line;
     std::istringstream iss(file_contents);
     std::vector<char> row;
@@ -114,9 +112,9 @@ int main(int argc, char *argv[])
             {
                 visited.clear();
                 perimeter_pieces.clear();
-                auto area_perim = get_area_and_perim(garden.at(i).at(j), i, j, -1, garden, visited, perimeter_pieces);
-                total_part_1 += std::get<0>(area_perim) * std::get<1>(area_perim);
-                total_part_2 += std::get<0>(area_perim) * number_of_sides(perimeter_pieces);
+                area = get_area_and_perim(garden.at(i).at(j), i, j, -1, garden, visited, perimeter_pieces);
+                total_part_1 += area * perimeter_pieces.size();
+                total_part_2 += area * number_of_sides(perimeter_pieces);
             }
         }
     }
